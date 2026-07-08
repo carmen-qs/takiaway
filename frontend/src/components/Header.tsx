@@ -5,7 +5,7 @@ import newHeader from "../images/newHeader.png";
 const navLinks = [
   { to: "/", label: "Inicio" },
   { to: "/catalog", label: "Artistas" },
-  { to: "/music", label: "Música" },
+  { to: "/about", label: "Nosotros" },
   { to: "/contact", label: "Contacto" },
 ];
 
