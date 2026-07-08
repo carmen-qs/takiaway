@@ -48,6 +48,7 @@ export default function Header() {
           );
         })}
       </nav>
+      <div className="absolute bottom-0 left-0 w-full h-16 -z-10 bg-gradient-to-b from-transparent to-slate-950" />
     </header>
   );
 }
