@@ -72,7 +72,7 @@
 
 ### Implementation for User Story 2
 
-- [x] T014 [P] [US2] Create Pydantic request model for contact messages in `backend/src/api/contact_schema.py`
+- [x] T014 [P] [US2] Create Pydantic request model for contact messages in `backend/src/schemas/contact.py`
 - [x] T015 [US2] Implement `POST /api/v1/contact-messages` endpoint in `backend/src/api/contact.py` (depends on T014, T005)
 - [x] T016 [US2] Register contact API router in `backend/main.py`
 - [x] T017 [P] [US2] Create API client service for contact messages in `frontend/src/services/contactService.ts`
