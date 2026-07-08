@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaYoutube, FaSpotify } from "react-icons/fa";
 import { Music, MousePointer2 } from "lucide-react";
 import newHeader from "../images/newHeader.png";
@@ -10,11 +9,11 @@ import Concierto2 from "../images/Concierto2.jpg";
 import Concierto4 from "../images/Concierto4.jpg";
 import Concierto5 from "../images/Concierto5.jpg";
 import Header from "../components/Header";
+import FloatingPetals from "../components/FloatingPetals";
 
 const heroImages = [Concierto1, Concierto2, Concierto4, Concierto5];
 
 export default function Home() {
-  const location = useLocation();
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
@@ -25,15 +24,9 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const navLinks = [
-    { to: "/", label: "Inicio" },
-    { to: "/catalog", label: "Artistas" },
-    { to: "/music", label: "Música" },
-    { to: "/contact", label: "Contacto" },
-  ];
-
   return (
     <>
+      <FloatingPetals />
       <section className="relative h-screen overflow-hidden bg-black">
         {/* Capas de fondo apiladas, con fade cruzado entre ellas */}
         {heroImages.map((img, index) => (

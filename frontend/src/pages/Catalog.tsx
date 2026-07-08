@@ -3,6 +3,7 @@ import axios from "axios";
 import ArtistCard from "../components/ArtistCard";
 import GenreFilter from "../components/GenreFilter";
 import Header from "../components/Header";
+import FloatingPetals from "../components/FloatingPetals";
 import Concierto2 from "../images/Concierto2.jpg";
 
 const Catalog = () => {
@@ -22,7 +23,8 @@ const Catalog = () => {
   }, [genre]);
 
   return (
-    <div className="bg-slate-950 min-h-screen">
+    <div className="bg-slate-950 min-h-screen relative">
+      <FloatingPetals />
       {/* Hero con el Header compartido encima */}
       <section
         className="relative bg-cover bg-center"

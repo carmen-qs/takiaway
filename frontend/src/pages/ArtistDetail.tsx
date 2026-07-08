@@ -4,6 +4,7 @@ import axios from "axios";
 import { ArrowLeft, MapPin } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer";
 import Header from "../components/Header";
+import FloatingPetals from "../components/FloatingPetals";
 
 interface Artist {
   id: string;
@@ -69,7 +70,8 @@ const ArtistDetail: React.FC = () => {
   }
 
   return (
-    <div className="bg-slate-950 min-h-screen">
+    <div className="bg-slate-950 min-h-screen relative">
+      <FloatingPetals />
       {/* Header compartido, necesita un contenedor con altura para posicionarse */}
       <div className="relative h-38">
         <Header />
