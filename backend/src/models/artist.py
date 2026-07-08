@@ -2,8 +2,10 @@ from sqlalchemy import Column, String, Text, UUID, ForeignKey
 from sqlalchemy.orm import relationship, DeclarativeBase
 import uuid
 
+
 class Base(DeclarativeBase):
     pass
+
 
 class Artist(Base):
     __tablename__ = "artists"
@@ -15,8 +17,10 @@ class Artist(Base):
     biografia = Column(Text, nullable=False)
     hito_relevante = Column(Text, nullable=False)
     fuente_url = Column(String, nullable=False)
-    
+    foto_url = Column(String, nullable=True)
+
     videos = relationship("Video", back_populates="artist")
+
 
 class Video(Base):
     __tablename__ = "videos"
@@ -24,5 +28,5 @@ class Video(Base):
     artist_id = Column(UUID(as_uuid=True), ForeignKey("artists.id"), nullable=False)
     youtube_video_id = Column(String, nullable=False)
     titulo = Column(String, nullable=False)
-    
+
     artist = relationship("Artist", back_populates="videos")
