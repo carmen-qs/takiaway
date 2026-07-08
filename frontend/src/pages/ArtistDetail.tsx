@@ -5,6 +5,7 @@ import { ArrowLeft, MapPin } from "lucide-react";
 import VideoPlayer from "../components/VideoPlayer";
 import Header from "../components/Header";
 import FloatingPetals from "../components/FloatingPetals";
+import AndeanPattern, { getColorForGenre } from "../components/AndeanPattern";
 
 interface Artist {
   id: string;
@@ -69,6 +70,8 @@ const ArtistDetail: React.FC = () => {
     );
   }
 
+  const [accentColor] = getColorForGenre(artist.genero_musical);
+
   return (
     <div className="bg-slate-950 min-h-screen relative">
       <FloatingPetals />
@@ -77,7 +80,16 @@ const ArtistDetail: React.FC = () => {
         <Header />
       </div>
 
-      <div className="p-4 md:p-8 max-w-5xl mx-auto">
+      {/* Franja decorativa con el patrón andino, coloreada según el género del artista */}
+      <div className="relative h-24 w-full overflow-hidden">
+        <AndeanPattern
+          genre={artist.genero_musical}
+          className="absolute inset-0 w-full h-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950" />
+      </div>
+
+      <div className="p-4 md:p-8 max-w-5xl mx-auto -mt-12 relative">
         <button
           onClick={() => navigate("/catalog")}
           className="mb-8 px-4 py-2 bg-slate-900 border border-pink-500/30 rounded-lg shadow-sm hover:border-pink-500 transition-all flex items-center gap-2 text-slate-200 font-medium"
@@ -94,11 +106,11 @@ const ArtistDetail: React.FC = () => {
             >
               {artist.nombre_artistico}
             </h1>
-            <p className="flex items-center justify-center md:justify-start gap-2 text-xl md:text-2xl text-orange-300 font-medium">
-              {artist.genero_musical}
+            <p className="flex items-center justify-center md:justify-start gap-2 text-xl md:text-2xl font-medium">
+              <span style={{ color: accentColor }}>{artist.genero_musical}</span>
               <span className="text-slate-600">•</span>
               <span className="flex items-center gap-1 text-slate-400 text-lg">
-                <MapPin size={16} className="text-pink-400" />
+                <MapPin size={16} style={{ color: accentColor }} />
                 {artist.origen}
               </span>
             </p>
