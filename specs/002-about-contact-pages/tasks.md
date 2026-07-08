@@ -88,9 +88,9 @@
 
 **Purpose**: Final refinements and global verification
 
-- [ ] T021 [P] Run `quickstart.md` validation scenarios end-to-end
-- [ ] T022 [P] Final CSS audit to ensure consistency with TakiAway's visual identity across both new pages
-- [ ] T023 [P] Code cleanup and documentation updates
+- [x] T021 [P] Run `quickstart.md` validation scenarios end-to-end
+- [x] T022 [P] Final CSS audit to ensure consistency with TakiAway's visual identity across both new pages
+- [x] T023 [P] Code cleanup and documentation updates
 
 ---
 

@@ -1,7 +1,6 @@
 from sqlalchemy import Column, String, Text, UUID, DateTime
-from sqlalchemy.ext.declarative import declarative_base
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from .artist import Base
 
 class ContactMessage(Base):
@@ -11,4 +10,4 @@ class ContactMessage(Base):
     nombre = Column(String, nullable=False)
     email = Column(String, nullable=False)
     mensaje = Column(Text, nullable=False)
-    fecha_creacion = Column(DateTime, default=datetime.utcnow)
+    fecha_creacion = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))

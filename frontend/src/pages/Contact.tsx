@@ -8,17 +8,18 @@ interface FormErrors {
   mensaje?: string;
 }
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const Contact: React.FC = () => {
   const [form, setForm] = useState({ nombre: "", email: "", mensaje: "" });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -31,13 +32,14 @@ const Contact: React.FC = () => {
     }
     if (!form.email.trim()) {
       newErrors.email = "El correo es requerido.";
+    } else if (!EMAIL_REGEX.test(form.email.trim())) {
+      newErrors.email = "El formato del correo no es válido.";
     }
     if (!form.mensaje.trim()) {
       newErrors.mensaje = "El mensaje es requerido.";
     }
     return newErrors;
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -62,7 +64,7 @@ const Contact: React.FC = () => {
         setErrorMsg(
           error.response?.status === 422
             ? "Revisa los datos ingresados e intenta de nuevo."
-            : "Ocurrió un error al enviar tu mensaje. Intenta más tarde."
+            : "Ocurrió un error al enviar tu mensaje. Intenta más tarde.",
         );
       });
   };

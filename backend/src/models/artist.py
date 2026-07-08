@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, Text, UUID, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, DeclarativeBase
 import uuid
 
-Base = declarative_base()
+class Base(DeclarativeBase):
+    pass
 
 class Artist(Base):
     __tablename__ = "artists"
