@@ -30,7 +30,7 @@ const ArtistDetail: React.FC = () => {
     if (!id) return;
 
     axios
-      .get(`http://localhost:8000/api/v1/artists/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/api/v1/artists/${id}`)
       .then((response) => {
         setArtist(response.data);
         setLoading(false);

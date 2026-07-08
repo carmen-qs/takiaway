@@ -8,13 +8,14 @@
 ## Setup & Running
 
 1. **Start the application**:
+
    ```bash
    docker compose up --build
    ```
 
 2. **Access the application**:
    - Frontend: `http://localhost:5173` (default Vite port)
-   - Backend API: `http://localhost:8000`
+   - Backend API: `http://localhost:8000` (desarrollo) / URL de producción en Render (una vez desplegado)
 
 ## Validation Scenarios
 

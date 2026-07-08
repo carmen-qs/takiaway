@@ -10,9 +10,10 @@ const Catalog = () => {
   const [genre, setGenre] = useState<string | null>(null);
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     const url = genre
-      ? `http://localhost:8000/api/v1/artists?genre=${encodeURIComponent(genre)}`
-      : "http://localhost:8000/api/v1/artists";
+      ? `${apiUrl}/api/v1/artists?genre=${encodeURIComponent(genre)}`
+      : `${apiUrl}/api/v1/artists`;
 
     axios
       .get(url)

@@ -12,7 +12,7 @@ const GenreFilter: React.FC<GenreFilterProps> = ({ onGenreChange }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/genres")
+      .get(`${import.meta.env.VITE_API_URL}/api/v1/genres`)
       .then((response) => {
         setGenres(response.data);
       })
