@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login as loginRequest } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
+import FloatingPetals from "../../components/FloatingPetals";
 
 interface FormErrors {
   email?: string;
@@ -62,7 +63,8 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-950 min-h-screen flex items-center justify-center px-6">
+    <div className="bg-slate-950 min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+      <FloatingPetals />
       <div className="w-full max-w-md">
         <h1
           className="text-3xl md:text-4xl uppercase text-white leading-tight mb-8 text-center"
