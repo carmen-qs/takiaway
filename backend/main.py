@@ -1,4 +1,5 @@
 import logging
+import os
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,6 +16,7 @@ logger = logging.getLogger("takiaway")
 
 app = FastAPI()
 
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"Unhandled exception occurred: {exc}", exc_info=True)
@@ -22,6 +24,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"detail": "An unexpected internal server error occurred. Please try again later."},
     )
+
 
 @app.exception_handler(SQLAlchemyError)
 async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
@@ -31,9 +34,15 @@ async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
         content={"detail": "A database error occurred while processing your request."},
     )
 
+
+# CORS_ORIGINS: lista de orígenes separados por coma, vía variable de entorno.
+# En local, si no está seteada, cae a localhost:5173 por defecto.
+cors_origins_env = os.getenv("CORS_ORIGINS", "http://localhost:5173")
+allowed_origins = [origin.strip() for origin in cors_origins_env.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -41,6 +50,7 @@ app.add_middleware(
 
 app.include_router(artists_router, prefix="/api/v1")
 app.include_router(contact_router, prefix="/api/v1")
+
 
 @app.get("/")
 def read_root():
