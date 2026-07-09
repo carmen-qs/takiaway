@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import {
-  getContactMessages,
-  ContactMessageOut,
-} from "../../services/adminService";
+import { getContactMessages } from "../../services/adminService";
+import type { ContactMessageOut } from "../../services/adminService";
 
 const AdminMessages: React.FC = () => {
   const { token, logout } = useAuth();
