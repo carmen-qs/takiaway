@@ -41,11 +41,11 @@ Checkpoint: admin can log in and receive/store a token.
 
 ### Tests for User Story 2
 
-- [ ] T017 [P] [US2] Contract test GET /api/v1/contact-messages with valid token, missing token, malformed token in backend/tests/contract/test_auth_api.py (extend)
+- [x] T017 [P] [US2] Contract test GET /api/v1/contact-messages with valid token, missing token, malformed token in backend/tests/contract/test_auth_api.py (extend)
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Add GET /api/v1/contact-messages endpoint in backend/src/api/contact.py, protected via get_current_admin (depends on T006)
+- [x] T018 [US2] Add GET /api/v1/contact-messages endpoint in backend/src/api/contact.py, protected via get_current_admin (depends on T006)
 - [ ] T019 [P] [US2] Add getContactMessages function in frontend/src/services/authService.ts or a new adminService.ts
 - [ ] T020 [P] [US2] Create ProtectedRoute component in frontend/src/components/ProtectedRoute.tsx
 - [ ] T021 [US2] Implement AdminMessages page in frontend/src/pages/admin/AdminMessages.tsx (list, most recent first) (depends on T019)

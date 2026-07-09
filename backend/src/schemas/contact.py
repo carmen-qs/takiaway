@@ -1,3 +1,6 @@
+from datetime import datetime
+from uuid import UUID
+
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -10,3 +13,13 @@ class ContactMessageCreate(BaseModel):
 class ContactMessageResponse(BaseModel):
     status: str
     message: str
+
+
+class ContactMessageOut(BaseModel):
+    id: UUID
+    nombre: str
+    email: str
+    mensaje: str
+    fecha_creacion: datetime
+
+    model_config = {"from_attributes": True}
