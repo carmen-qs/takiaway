@@ -8,6 +8,8 @@ from src.api.contact import router as contact_router
 from src.api.auth import router as auth_router
 from src.api.users import router as users_router
 from sqlalchemy.exc import SQLAlchemyError
+from src.database import engine
+from src.models import Base
 
 # Configure basic logging
 logging.basicConfig(
@@ -17,6 +19,15 @@ logging.basicConfig(
 logger = logging.getLogger("takiaway")
 
 app = FastAPI()
+
+
+@app.on_event("startup")
+async def create_missing_tables():
+    # Crea cualquier tabla declarada en los modelos que aun no exista en la
+    # base de datos (p.ej. 'users' recien agregada). No toca tablas que ya
+    # existen -- es seguro correrlo en cada arranque, en local y en prod.
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 
 @app.exception_handler(Exception)
