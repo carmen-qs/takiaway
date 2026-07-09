@@ -29,11 +29,11 @@ Checkpoint: foundation ready for US1 and US2.
 - [x] T009 [P] [US1] Create LoginRequest and TokenResponse schemas in backend/src/schemas/auth.py
 - [x] T010 [US1] Implement POST /api/v1/auth/login in backend/src/api/auth.py (depends on T009, T005)
 - [x] T011 [US1] Register auth router in backend/main.py
-- [ ] T012 [P] [US1] Create authService.ts (login function) in frontend/src/services/authService.ts
-- [ ] T013 [P] [US1] Create AuthContext.tsx (token state, login, logout, isAuthenticated) in frontend/src/context/AuthContext.tsx
-- [ ] T014 [US1] Implement AdminLogin page in frontend/src/pages/admin/AdminLogin.tsx (depends on T012, T013)
-- [ ] T015 [P] [US1] Component test in frontend/src/pages/admin/AdminLogin.test.tsx
-- [ ] T016 [US1] Add /admin/login route in frontend/src/App.tsx, wrap app in AuthProvider
+- [x] T012 [P] [US1] Create authService.ts (login function) in frontend/src/services/authService.ts
+- [x] T013 [P] [US1] Create AuthContext.tsx (token state, login, logout, isAuthenticated) in frontend/src/context/AuthContext.tsx
+- [x] T014 [US1] Implement AdminLogin page in frontend/src/pages/admin/AdminLogin.tsx (depends on T012, T013)
+- [x] T015 [P] [US1] Component test in frontend/src/pages/admin/AdminLogin.test.tsx
+- [x] T016 [US1] Add /admin/login route in frontend/src/App.tsx, wrap app in AuthProvider
 
 Checkpoint: admin can log in and receive/store a token.
 
