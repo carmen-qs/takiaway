@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Music, MapPin, ArrowRight } from "lucide-react";
 import AndeanPattern, { getColorForGenre } from "./AndeanPattern";

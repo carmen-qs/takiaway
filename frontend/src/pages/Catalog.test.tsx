@@ -36,7 +36,7 @@ function renderCatalog() {
   return render(
     <BrowserRouter>
       <Catalog />
-    </BrowserRouter>
+    </BrowserRouter>,
   );
 }
 
@@ -54,9 +54,7 @@ describe("Catalog page", () => {
   it("renders the list of artists returned by the API", async () => {
     renderCatalog();
 
-    expect(
-      await screen.findByText("Renata Flores Rivera")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("Renata Flores Rivera")).toBeInTheDocument();
     expect(screen.getByText("Kayfex")).toBeInTheDocument();
   });
 
@@ -71,7 +69,7 @@ describe("Catalog page", () => {
     renderCatalog();
 
     expect(
-      await screen.findByText(/no se encontraron artistas/i)
+      await screen.findByText(/no se encontraron artistas/i),
     ).toBeInTheDocument();
   });
 
@@ -85,7 +83,8 @@ describe("Catalog page", () => {
 
     await waitFor(() => {
       const calledWithGenreFilter = mockedGet.mock.calls.some(
-        ([url]: [string]) => url.includes("/artists") && url.includes("genre=")
+        (call: any[]) =>
+          call[0].includes("/artists") && call[0].includes("genre="),
       );
       expect(calledWithGenreFilter).toBe(true);
     });

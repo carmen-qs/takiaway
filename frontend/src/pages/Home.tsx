@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaFacebookF, FaInstagram, FaYoutube, FaSpotify } from "react-icons/fa";
 import { Music, MousePointer2 } from "lucide-react";
-import newHeader from "../images/newHeader.png";
 import Footer from "../images/Footer.png";
 import Concierto1 from "../images/Concierto1.jpg";
 import Concierto2 from "../images/Concierto2.jpg";

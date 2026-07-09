@@ -30,16 +30,6 @@ const timeline = [
   { fecha: "Hoy", texto: "TakiAway sigue creciendo, un artista a la vez." },
 ];
 
-const PETAL_COUNT = 16;
-const petals = Array.from({ length: PETAL_COUNT }, (_, i) => ({
-  id: i,
-  left: Math.random() * 100,
-  delay: Math.random() * 12,
-  duration: 9 + Math.random() * 8,
-  size: 8 + Math.random() * 10,
-  drift: (Math.random() - 0.5) * 80,
-}));
-
 const About: React.FC = () => {
   return (
     <div className="bg-slate-950 min-h-screen relative overflow-hidden">
