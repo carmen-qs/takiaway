@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminMessages from "./pages/admin/AdminMessages";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -20,6 +22,14 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin/messages"
+              element={
+                <ProtectedRoute>
+                  <AdminMessages />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </Router>

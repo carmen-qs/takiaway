@@ -46,11 +46,11 @@ Checkpoint: admin can log in and receive/store a token.
 ### Implementation for User Story 2
 
 - [x] T018 [US2] Add GET /api/v1/contact-messages endpoint in backend/src/api/contact.py, protected via get_current_admin (depends on T006)
-- [ ] T019 [P] [US2] Add getContactMessages function in frontend/src/services/authService.ts or a new adminService.ts
-- [ ] T020 [P] [US2] Create ProtectedRoute component in frontend/src/components/ProtectedRoute.tsx
-- [ ] T021 [US2] Implement AdminMessages page in frontend/src/pages/admin/AdminMessages.tsx (list, most recent first) (depends on T019)
-- [ ] T022 [P] [US2] Component test in frontend/src/pages/admin/AdminMessages.test.tsx (renders list, redirects when unauthenticated)
-- [ ] T023 [US2] Add /admin/messages route wrapped in ProtectedRoute in frontend/src/App.tsx (depends on T020, T021)
+- [x] T019 [P] [US2] Add getContactMessages function in frontend/src/services/authService.ts or a new adminService.ts
+- [x] T020 [P] [US2] Create ProtectedRoute component in frontend/src/components/ProtectedRoute.tsx
+- [x] T021 [US2] Implement AdminMessages page in frontend/src/pages/admin/AdminMessages.tsx (list, most recent first) (depends on T019)
+- [x] T022 [P] [US2] Component test in frontend/src/pages/admin/AdminMessages.test.tsx (renders list, redirects when unauthenticated)
+- [x] T023 [US2] Add /admin/messages route wrapped in ProtectedRoute in frontend/src/App.tsx (depends on T020, T021)
 
 Checkpoint: admin can log in and view all contact messages; route is protected.
 
