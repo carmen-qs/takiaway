@@ -64,32 +64,32 @@ export default function Home() {
         </div>
 
         {/* Hero */}
-        <div className="relative z-10 flex items-center h-full px-32">
+        <div className="relative z-10 flex items-center h-full px-6 md:px-32">
           <div className="max-w-2xl">
             <h1
-              className="text-7xl uppercase text-white leading-none"
+              className="text-4xl sm:text-5xl md:text-7xl uppercase text-white leading-none"
               style={{ fontFamily: "'Permanent Marker', cursive" }}
             >
               Artistas
             </h1>
 
             <h1
-              className="text-7xl uppercase text-pink-600 leading-none"
+              className="text-4xl sm:text-5xl md:text-7xl uppercase text-pink-600 leading-none"
               style={{ fontFamily: "'Permanent Marker', cursive" }}
             >
               Ayacuchanos
             </h1>
 
-            <h2 className="mt-4 text-3xl tracking-[10px] text-orange-300">
+            <h2 className="mt-4 text-lg sm:text-2xl md:text-3xl tracking-[4px] sm:tracking-[10px] text-orange-300">
               POP QUECHUA
             </h2>
 
-            <p className="mt-8 text-xl text-white leading-9">
+            <p className="mt-6 md:mt-8 text-base md:text-xl text-white leading-7 md:leading-9">
               La música que nace de nuestra tierra, mezclando tradición y
               modernidad.
             </p>
 
-            <button className="mt-10 flex items-center gap-2 rounded-full bg-pink-600 px-10 py-4 text-xl font-bold text-white transition hover:bg-pink-700">
+            <button className="mt-8 md:mt-10 flex items-center gap-2 rounded-full bg-pink-600 px-6 md:px-10 py-3 md:py-4 text-base md:text-xl font-bold text-white transition hover:bg-pink-700">
               <Music size={20} />
               Explorar Artistas
             </button>
