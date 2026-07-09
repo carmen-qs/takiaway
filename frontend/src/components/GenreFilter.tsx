@@ -28,19 +28,21 @@ const GenreFilter: React.FC<GenreFilterProps> = ({ onGenreChange }) => {
   };
 
   return (
-    <div className="flex items-center gap-2 bg-slate-900 border border-pink-500/40 rounded-full px-5 py-3">
-      <Music className="text-pink-400" size={16} />
-      <label
-        htmlFor="genre-select"
-        className="text-sm font-medium text-slate-300 whitespace-nowrap"
-      >
-        Filtrar por género:
-      </label>
+    <div className="flex flex-wrap items-center justify-center gap-2 bg-slate-900 border border-pink-500/40 rounded-2xl sm:rounded-full px-4 sm:px-5 py-3 w-full sm:w-auto">
+      <div className="flex items-center gap-2 shrink-0">
+        <Music className="text-pink-400" size={16} />
+        <label
+          htmlFor="genre-select"
+          className="text-sm font-medium text-slate-300 whitespace-nowrap"
+        >
+          Filtrar por género:
+        </label>
+      </div>
       <select
         id="genre-select"
         value={selectedGenre}
         onChange={handleChange}
-        className="bg-slate-900 text-white text-sm rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-pink-500 border-none"
+        className="bg-slate-900 text-white text-sm rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-pink-500 border-none w-full sm:w-auto min-w-0"
       >
         <option value="" className="bg-slate-900">
           Todos los géneros
