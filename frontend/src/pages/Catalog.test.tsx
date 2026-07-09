@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
+import { UserAuthProvider } from "../context/UserAuthContext";
 import Catalog from "./Catalog";
 
 vi.mock("axios", () => ({
@@ -34,9 +35,11 @@ const genresData = [
 
 function renderCatalog() {
   return render(
-    <BrowserRouter>
-      <Catalog />
-    </BrowserRouter>,
+    <UserAuthProvider>
+      <BrowserRouter>
+        <Catalog />
+      </BrowserRouter>
+    </UserAuthProvider>,
   );
 }
 

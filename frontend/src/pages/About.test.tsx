@@ -1,14 +1,17 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { UserAuthProvider } from "../context/UserAuthContext";
 import About from "./About";
 
 describe("About page", () => {
   it("renders the TakiAway purpose statement", () => {
     render(
-      <BrowserRouter>
-        <About />
-      </BrowserRouter>
+      <UserAuthProvider>
+        <BrowserRouter>
+          <About />
+        </BrowserRouter>
+      </UserAuthProvider>
     );
 
     expect(

@@ -1,15 +1,22 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { UserAuthProvider } from "../context/UserAuthContext";
 import Home from "./Home";
 
-describe("Home page", () => {
-  it("renders the hero title", () => {
-    render(
+function renderHome() {
+  return render(
+    <UserAuthProvider>
       <BrowserRouter>
         <Home />
       </BrowserRouter>
-    );
+    </UserAuthProvider>
+  );
+}
+
+describe("Home page", () => {
+  it("renders the hero title", () => {
+    renderHome();
     expect(
       screen.getByText("Artistas", { selector: "h1" })
     ).toBeInTheDocument();
@@ -17,22 +24,14 @@ describe("Home page", () => {
   });
 
   it("renders the call-to-action button", () => {
-    render(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    );
+    renderHome();
     expect(
       screen.getByRole("button", { name: /explorar artistas/i })
     ).toBeInTheDocument();
   });
 
   it("renders the 'Conoce a los artistas' section", () => {
-    render(
-      <BrowserRouter>
-        <Home />
-      </BrowserRouter>
-    );
+    renderHome();
     expect(screen.getByText(/conoce a los artistas/i)).toBeInTheDocument();
   });
 });

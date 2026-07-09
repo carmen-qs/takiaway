@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
+import { UserAuthProvider } from "../context/UserAuthContext";
 import ArtistDetail from "./ArtistDetail";
 
 vi.mock("axios", () => ({
@@ -14,11 +15,13 @@ const mockedGet = axios.get as unknown as ReturnType<typeof vi.fn>;
 
 function renderWithRoute(id: string) {
   return render(
-    <MemoryRouter initialEntries={[`/artist/${id}`]}>
-      <Routes>
-        <Route path="/artist/:id" element={<ArtistDetail />} />
-      </Routes>
-    </MemoryRouter>
+    <UserAuthProvider>
+      <MemoryRouter initialEntries={[`/artist/${id}`]}>
+        <Routes>
+          <Route path="/artist/:id" element={<ArtistDetail />} />
+        </Routes>
+      </MemoryRouter>
+    </UserAuthProvider>
   );
 }
 

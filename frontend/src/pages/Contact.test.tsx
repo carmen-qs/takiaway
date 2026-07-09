@@ -1,8 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { UserAuthProvider } from "../context/UserAuthContext";
 import Contact from "./Contact";
 import * as contactService from "../services/contactService";
+
+function renderContact() {
+  return render(
+    <UserAuthProvider>
+      <BrowserRouter>
+        <Contact />
+      </BrowserRouter>
+    </UserAuthProvider>
+  );
+}
 
 describe("Contact page", () => {
   beforeEach(() => {
@@ -10,11 +21,7 @@ describe("Contact page", () => {
   });
 
   it("shows a validation error when submitting an empty form", async () => {
-    render(
-      <BrowserRouter>
-        <Contact />
-      </BrowserRouter>
-    );
+    renderContact();
 
     fireEvent.click(screen.getByRole("button", { name: /enviar/i }));
 
@@ -31,11 +38,7 @@ describe("Contact page", () => {
         message: "Mensaje enviado exitosamente",
       });
 
-    render(
-      <BrowserRouter>
-        <Contact />
-      </BrowserRouter>
-    );
+    renderContact();
 
     fireEvent.change(screen.getByLabelText(/nombre/i), {
       target: { value: "Carmen" },
@@ -60,11 +63,7 @@ describe("Contact page", () => {
       new Error("network error")
     );
 
-    render(
-      <BrowserRouter>
-        <Contact />
-      </BrowserRouter>
-    );
+    renderContact();
 
     fireEvent.change(screen.getByLabelText(/nombre/i), {
       target: { value: "Carmen" },
