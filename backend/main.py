@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.artists import router as artists_router
 from src.api.contact import router as contact_router
+from src.api.auth import router as auth_router
 from sqlalchemy.exc import SQLAlchemyError
 
 # Configure basic logging
@@ -50,6 +51,7 @@ app.add_middleware(
 
 app.include_router(artists_router, prefix="/api/v1")
 app.include_router(contact_router, prefix="/api/v1")
+app.include_router(auth_router, prefix="/api/v1")
 
 
 @app.get("/")
