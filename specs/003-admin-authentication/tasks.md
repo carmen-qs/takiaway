@@ -5,16 +5,16 @@ Prerequisites: plan.md, spec.md, research.md, data-model.md, contracts/api.md, q
 
 ## Phase 1: Setup
 
-- [ ] T001 [P] Add passlib[bcrypt] and python-jose[cryptography] to backend/requirements.txt
-- [ ] T002 [P] Add JWT_SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD, ACCESS_TOKEN_EXPIRE_MINUTES placeholders to backend/.env (local, gitignored)
+- [x] T001 [P] Add passlib[bcrypt] and python-jose[cryptography] to backend/requirements.txt
+- [x] T002 [P] Add JWT_SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD, ACCESS_TOKEN_EXPIRE_MINUTES placeholders to backend/.env (local, gitignored)
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-- [ ] T003 Create AdminUser model in backend/src/models/admin_user.py
-- [ ] T004 Register AdminUser in backend/src/models/__init__.py
-- [ ] T005 Implement password hashing and JWT helpers in backend/src/services/auth_service.py (verify_password, get_password_hash, create_access_token, decode_token)
-- [ ] T006 Implement get_current_admin FastAPI dependency in backend/src/core/security.py
-- [ ] T007 Create idempotent seed script backend/seed_admin.py reading ADMIN_EMAIL/ADMIN_PASSWORD
+- [x] T003 Create AdminUser model in backend/src/models/admin_user.py
+- [x] T004 Register AdminUser in backend/src/models/__init__.py
+- [x] T005 Implement password hashing and JWT helpers in backend/src/services/auth_service.py (verify_password, get_password_hash, create_access_token, decode_token)
+- [x] T006 Implement get_current_admin FastAPI dependency in backend/src/core/security.py
+- [x] T007 Create idempotent seed script backend/seed_admin.py reading ADMIN_EMAIL/ADMIN_PASSWORD
 
 Checkpoint: foundation ready for US1 and US2.
 
