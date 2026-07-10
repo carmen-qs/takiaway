@@ -49,10 +49,10 @@ export default function Header() {
         {/* Botón hamburguesa, solo visible en mobile */}
         <button
           onClick={() => setMenuOpen((open) => !open)}
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 bg-slate-900/80 border border-pink-500/40 rounded-full"
           aria-label="Abrir menú"
         >
-          {menuOpen ? <X size={26} /> : <Menu size={26} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
 
         {/* Nav de escritorio */}
