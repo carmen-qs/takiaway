@@ -20,6 +20,7 @@ describe("contactService", () => {
       nombre: "Carmen",
       email: "carmen@example.com",
       mensaje: "Hola, quiero saber más.",
+      tipo: "consulta",
     };
     const responseData = {
       status: "success",
@@ -44,6 +45,7 @@ describe("contactService", () => {
         nombre: "Carmen",
         email: "carmen@example.com",
         mensaje: "Hola",
+        tipo: "consulta",
       })
     ).rejects.toThrow("network error");
   });

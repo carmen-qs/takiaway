@@ -11,6 +11,13 @@ interface FormErrors {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const TIPOS = [
+  { value: "consulta", label: "Consulta" },
+  { value: "sugerencia", label: "Sugerencia" },
+  { value: "reclamo", label: "Reclamo" },
+  { value: "otro", label: "Otro" },
+];
+
 const Contact: React.FC = () => {
   const { isAuthenticated, nombre: userNombre, email: userEmail } = useUserAuth();
 
@@ -18,6 +25,7 @@ const Contact: React.FC = () => {
     nombre: userNombre || "",
     email: userEmail || "",
     mensaje: "",
+    tipo: "consulta",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<
@@ -27,7 +35,7 @@ const Contact: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -67,13 +75,19 @@ const Contact: React.FC = () => {
       nombre: isAuthenticated ? userNombre || form.nombre : form.nombre,
       email: isAuthenticated ? userEmail || form.email : form.email,
       mensaje: form.mensaje,
+      tipo: form.tipo,
     };
 
     sendContactMessage(payload)
       .then((response) => {
         setStatus("success");
         setSuccessMessage(response.message);
-        setForm({ nombre: userNombre || "", email: userEmail || "", mensaje: "" });
+        setForm({
+          nombre: userNombre || "",
+          email: userEmail || "",
+          mensaje: "",
+          tipo: "consulta",
+        });
       })
       .catch((error) => {
         console.error("Error sending contact message:", error);
@@ -159,6 +173,28 @@ const Contact: React.FC = () => {
                   </div>
                 </>
               )}
+
+              <div>
+                <label
+                  htmlFor="tipo"
+                  className="block text-sm font-medium text-slate-300 mb-2"
+                >
+                  Tipo de mensaje
+                </label>
+                <select
+                  id="tipo"
+                  name="tipo"
+                  value={form.tipo}
+                  onChange={handleChange}
+                  className="w-full bg-slate-800 text-white rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-pink-500 border-none"
+                >
+                  {TIPOS.map((t) => (
+                    <option key={t.value} value={t.value}>
+                      {t.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div>
                 <label

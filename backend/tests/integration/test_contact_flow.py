@@ -7,6 +7,7 @@ async def test_contact_message_is_persisted(client, db_session):
         "nombre": "Integracion Test",
         "email": "integracion@example.com",
         "mensaje": "Mensaje de prueba de integracion.",
+        "tipo": "consulta",
     }
     response = await client.post("/api/v1/contact-messages", json=payload)
     assert response.status_code == 201
@@ -20,3 +21,4 @@ async def test_contact_message_is_persisted(client, db_session):
     assert saved is not None
     assert saved.nombre == "Integracion Test"
     assert saved.mensaje == "Mensaje de prueba de integracion."
+    assert saved.tipo == "consulta"

@@ -2,9 +2,10 @@ import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from sqlalchemy import event
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from main import app
 from src.database import engine, get_db
+from src.models import AdminUser
+from src.services.auth_service import get_password_hash
 
 
 @pytest_asyncio.fixture
@@ -13,7 +14,6 @@ async def db_session():
     sin importar cuántos commit() haga el código bajo prueba."""
     connection = await engine.connect()
     outer_trans = await connection.begin()
-
     session = AsyncSession(bind=connection, expire_on_commit=False)
     nested = await connection.begin_nested()
 
@@ -46,3 +46,16 @@ async def client(db_session):
         yield ac
 
     app.dependency_overrides.pop(get_db, None)
+
+
+@pytest_asyncio.fixture
+async def test_admin(db_session):
+    """Crea un admin de prueba dentro de la transaccion aislada del test.
+    Se revierte automaticamente al terminar."""
+    admin = AdminUser(
+        email="test-admin@example.com",
+        hashed_password=get_password_hash("SuperSecreta123"),
+    )
+    db_session.add(admin)
+    await db_session.commit()
+    return admin

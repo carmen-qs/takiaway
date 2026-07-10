@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime, timezone
 from .artist import Base
 
+
 class ContactMessage(Base):
     __tablename__ = "contact_messages"
 
@@ -10,4 +11,5 @@ class ContactMessage(Base):
     nombre = Column(String, nullable=False)
     email = Column(String, nullable=False)
     mensaje = Column(Text, nullable=False)
+    tipo = Column(String, nullable=False, default="consulta")
     fecha_creacion = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))

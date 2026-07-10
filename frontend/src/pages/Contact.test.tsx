@@ -46,7 +46,7 @@ describe("Contact page", () => {
     fireEvent.change(screen.getByLabelText(/correo/i), {
       target: { value: "carmen@example.com" },
     });
-    fireEvent.change(screen.getByLabelText(/mensaje/i), {
+    fireEvent.change(screen.getByLabelText(/^mensaje$/i), {
       target: { value: "Hola, este es un mensaje de prueba." },
     });
 
@@ -71,7 +71,7 @@ describe("Contact page", () => {
     fireEvent.change(screen.getByLabelText(/correo/i), {
       target: { value: "carmen@example.com" },
     });
-    fireEvent.change(screen.getByLabelText(/mensaje/i), {
+    fireEvent.change(screen.getByLabelText(/^mensaje$/i), {
       target: { value: "Hola, este es un mensaje de prueba." },
     });
 

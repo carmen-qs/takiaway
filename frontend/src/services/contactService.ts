@@ -4,6 +4,7 @@ export interface ContactPayload {
   nombre: string;
   email: string;
   mensaje: string;
+  tipo: string;
 }
 
 export interface ContactResponse {

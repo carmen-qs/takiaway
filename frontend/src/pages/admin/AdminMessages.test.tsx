@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AdminMessages from "./AdminMessages";
 import { AuthProvider } from "../../context/AuthContext";
@@ -28,6 +28,7 @@ describe("AdminMessages page", () => {
         nombre: "Carmen Test",
         email: "carmen@example.com",
         mensaje: "Hola, quiero saber mas sobre TakiAway.",
+        tipo: "consulta",
         fecha_creacion: "2026-07-08T14:02:22.483487",
       },
     ]);
@@ -41,6 +42,7 @@ describe("AdminMessages page", () => {
     expect(
       screen.getByText(/hola, quiero saber mas sobre takiaway/i)
     ).toBeInTheDocument();
+    expect(screen.getByText("Consulta")).toBeInTheDocument();
   });
 
   it("shows an empty state when there are no messages", async () => {
@@ -65,5 +67,59 @@ describe("AdminMessages page", () => {
     expect(
       await screen.findByText(/ocurrió un error al cargar los mensajes/i)
     ).toBeInTheDocument();
+  });
+
+  it("deletes a message after confirmation", async () => {
+    sessionStorage.setItem("takiaway_admin_token", "fake-jwt-token");
+    vi.spyOn(adminService, "getContactMessages").mockResolvedValue([
+      {
+        id: "1",
+        nombre: "Carmen Test",
+        email: "carmen@example.com",
+        mensaje: "Mensaje a eliminar",
+        tipo: "otro",
+        fecha_creacion: "2026-07-08T14:02:22.483487",
+      },
+    ]);
+    const deleteSpy = vi
+      .spyOn(adminService, "deleteContactMessage")
+      .mockResolvedValue(undefined);
+
+    renderAdminMessages();
+
+    await screen.findByText("Carmen Test");
+
+    fireEvent.click(screen.getByRole("button", { name: /eliminar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /sí, eliminar/i }));
+
+    await waitFor(() => expect(deleteSpy).toHaveBeenCalledWith("fake-jwt-token", "1"));
+    await waitFor(() =>
+      expect(screen.queryByText("Carmen Test")).not.toBeInTheDocument()
+    );
+  });
+
+  it("cancels deletion without calling the API", async () => {
+    sessionStorage.setItem("takiaway_admin_token", "fake-jwt-token");
+    vi.spyOn(adminService, "getContactMessages").mockResolvedValue([
+      {
+        id: "1",
+        nombre: "Carmen Test",
+        email: "carmen@example.com",
+        mensaje: "Mensaje a conservar",
+        tipo: "otro",
+        fecha_creacion: "2026-07-08T14:02:22.483487",
+      },
+    ]);
+    const deleteSpy = vi.spyOn(adminService, "deleteContactMessage");
+
+    renderAdminMessages();
+
+    await screen.findByText("Carmen Test");
+
+    fireEvent.click(screen.getByRole("button", { name: /eliminar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /cancelar/i }));
+
+    expect(deleteSpy).not.toHaveBeenCalled();
+    expect(screen.getByText("Carmen Test")).toBeInTheDocument();
   });
 });
