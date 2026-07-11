@@ -7,11 +7,11 @@ from src.api.artists import router as artists_router
 from src.api.contact import router as contact_router
 from src.api.auth import router as auth_router
 from src.api.users import router as users_router
+from src.api.favorites import router as favorites_router
 from sqlalchemy.exc import SQLAlchemyError
 from src.database import engine
 from src.models import Base
 
-# Configure basic logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -23,9 +23,6 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def create_missing_tables():
-    # Crea cualquier tabla declarada en los modelos que aun no exista en la
-    # base de datos (p.ej. 'users' recien agregada). No toca tablas que ya
-    # existen -- es seguro correrlo en cada arranque, en local y en prod.
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
@@ -48,8 +45,6 @@ async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError):
     )
 
 
-# CORS_ORIGINS: lista de orígenes separados por coma, vía variable de entorno.
-# En local, si no está seteada, cae a localhost:5173 por defecto.
 cors_origins_env = os.getenv("CORS_ORIGINS", "http://localhost:5173")
 allowed_origins = [origin.strip() for origin in cors_origins_env.split(",")]
 
@@ -65,6 +60,7 @@ app.include_router(artists_router, prefix="/api/v1")
 app.include_router(contact_router, prefix="/api/v1")
 app.include_router(auth_router, prefix="/api/v1")
 app.include_router(users_router, prefix="/api/v1")
+app.include_router(favorites_router, prefix="/api/v1")
 
 
 @app.get("/")

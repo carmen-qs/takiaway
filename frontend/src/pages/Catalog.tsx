@@ -5,10 +5,18 @@ import GenreFilter from "../components/GenreFilter";
 import Header from "../components/Header";
 import FloatingPetals from "../components/FloatingPetals";
 import Concierto2 from "../images/Concierto2.jpg";
+import { useUserAuth } from "../context/UserAuthContext";
+import {
+  getFavoriteIds,
+  addFavorite,
+  removeFavorite,
+} from "../services/favoriteService";
 
 const Catalog = () => {
   const [artists, setArtists] = useState([]);
   const [genre, setGenre] = useState<string | null>(null);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const { isAuthenticated, token } = useUserAuth();
 
   useEffect(() => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -21,6 +29,44 @@ const Catalog = () => {
       .then((response) => setArtists(response.data))
       .catch((error) => console.error(error));
   }, [genre]);
+
+  useEffect(() => {
+    if (!isAuthenticated || !token) {
+      setFavoriteIds([]);
+      return;
+    }
+    getFavoriteIds(token)
+      .then((ids) => setFavoriteIds(ids))
+      .catch((error) => console.error("Error fetching favorites:", error));
+  }, [isAuthenticated, token]);
+
+  const handleToggleFavorite = (artistId: string) => {
+    if (!token) return;
+
+    const isCurrentlyFavorite = favoriteIds.includes(artistId);
+
+    // Actualización optimista: cambiamos el estado local ANTES de que
+    // responda el servidor, para que el corazón reaccione al instante.
+    setFavoriteIds((prev) =>
+      isCurrentlyFavorite
+        ? prev.filter((id) => id !== artistId)
+        : [...prev, artistId]
+    );
+
+    const request = isCurrentlyFavorite
+      ? removeFavorite(token, artistId)
+      : addFavorite(token, artistId);
+
+    request.catch((error) => {
+      console.error("Error toggling favorite:", error);
+      // Si falla en el servidor, revertimos el cambio optimista.
+      setFavoriteIds((prev) =>
+        isCurrentlyFavorite
+          ? [...prev, artistId]
+          : prev.filter((id) => id !== artistId)
+      );
+    });
+  };
 
   return (
     <div className="bg-slate-950 min-h-screen relative">
@@ -62,7 +108,12 @@ const Catalog = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {artists.map((artist: any) => (
-            <ArtistCard key={artist.id} artist={artist} />
+            <ArtistCard
+              key={artist.id}
+              artist={artist}
+              isFavorite={favoriteIds.includes(artist.id)}
+              onToggleFavorite={handleToggleFavorite}
+            />
           ))}
         </div>
 

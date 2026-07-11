@@ -2,7 +2,8 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
-import { UserAuthProvider } from "../context/UserAuthContext";
+import { UserAuthProvider, useUserAuth } from "../context/UserAuthContext";
+import * as favoriteService from "../services/favoriteService";
 import Catalog from "./Catalog";
 
 vi.mock("axios", () => ({
@@ -33,11 +34,21 @@ const genresData = [
   "Producción electrónica y sonidos andinos",
 ];
 
-function renderCatalog() {
+function LoginHelper() {
+  const { login } = useUserAuth();
+  return (
+    <button onClick={() => login("token-abc", "Carmen", "carmen@example.com")}>
+      do-login
+    </button>
+  );
+}
+
+function renderCatalog({ withLoginHelper = false } = {}) {
   return render(
     <UserAuthProvider>
       <BrowserRouter>
         <Catalog />
+        {withLoginHelper && <LoginHelper />}
       </BrowserRouter>
     </UserAuthProvider>,
   );
@@ -45,7 +56,8 @@ function renderCatalog() {
 
 describe("Catalog page", () => {
   beforeEach(() => {
-    mockedGet.mockReset();
+    vi.restoreAllMocks();
+    sessionStorage.clear();
     mockedGet.mockImplementation((url: string) => {
       if (url.includes("/genres")) {
         return Promise.resolve({ data: genresData });
@@ -91,5 +103,81 @@ describe("Catalog page", () => {
       );
       expect(calledWithGenreFilter).toBe(true);
     });
+  });
+
+  it("does not show favorite buttons when logged out", async () => {
+    renderCatalog();
+    await screen.findByText("Renata Flores Rivera");
+
+    expect(screen.queryByLabelText(/favoritos/i)).not.toBeInTheDocument();
+  });
+
+  it("loads favorite ids and marks the matching artist as favorite when logged in", async () => {
+    vi.spyOn(favoriteService, "getFavoriteIds").mockResolvedValue(["1"]);
+
+    renderCatalog({ withLoginHelper: true });
+    fireEvent.click(screen.getByText("do-login"));
+
+    await screen.findByText("Renata Flores Rivera");
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Quitar de favoritos")).toBeInTheDocument();
+    });
+    expect(screen.getByLabelText("Agregar a favoritos")).toBeInTheDocument();
+  });
+
+  it("adds a favorite optimistically when the heart button is clicked", async () => {
+    vi.spyOn(favoriteService, "getFavoriteIds").mockResolvedValue([]);
+    const addSpy = vi
+      .spyOn(favoriteService, "addFavorite")
+      .mockResolvedValue(undefined);
+
+    renderCatalog({ withLoginHelper: true });
+    fireEvent.click(screen.getByText("do-login"));
+
+    await screen.findByText("Renata Flores Rivera");
+    const [firstHeart] = await screen.findAllByLabelText("Agregar a favoritos");
+
+    fireEvent.click(firstHeart);
+
+    await waitFor(() => expect(addSpy).toHaveBeenCalledWith("token-abc", "1"));
+  });
+
+  it("reverts the optimistic update when adding a favorite fails", async () => {
+    vi.spyOn(favoriteService, "getFavoriteIds").mockResolvedValue([]);
+    vi.spyOn(favoriteService, "addFavorite").mockRejectedValue(
+      new Error("network error"),
+    );
+
+    renderCatalog({ withLoginHelper: true });
+    fireEvent.click(screen.getByText("do-login"));
+
+    await screen.findByText("Renata Flores Rivera");
+    const [firstHeart] = await screen.findAllByLabelText("Agregar a favoritos");
+
+    fireEvent.click(firstHeart);
+
+    await waitFor(() => {
+      expect(screen.getAllByLabelText("Agregar a favoritos").length).toBe(2);
+    });
+  });
+
+  it("removes a favorite when the filled heart button is clicked", async () => {
+    vi.spyOn(favoriteService, "getFavoriteIds").mockResolvedValue(["1"]);
+    const removeSpy = vi
+      .spyOn(favoriteService, "removeFavorite")
+      .mockResolvedValue(undefined);
+
+    renderCatalog({ withLoginHelper: true });
+    fireEvent.click(screen.getByText("do-login"));
+
+    await screen.findByText("Renata Flores Rivera");
+    const filledHeart = await screen.findByLabelText("Quitar de favoritos");
+
+    fireEvent.click(filledHeart);
+
+    await waitFor(() =>
+      expect(removeSpy).toHaveBeenCalledWith("token-abc", "1"),
+    );
   });
 });

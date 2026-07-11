@@ -1,6 +1,8 @@
+import type { MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { Music, MapPin, ArrowRight } from "lucide-react";
+import { Music, MapPin, ArrowRight, Heart } from "lucide-react";
 import AndeanPattern, { getColorForGenre } from "./AndeanPattern";
+import { useUserAuth } from "../context/UserAuthContext";
 
 interface Artist {
   id: string;
@@ -9,8 +11,21 @@ interface Artist {
   genero_musical: string;
 }
 
-const ArtistCard = ({ artist }: { artist: Artist }) => {
+interface ArtistCardProps {
+  artist: Artist;
+  isFavorite?: boolean;
+  onToggleFavorite?: (artistId: string) => void;
+}
+
+const ArtistCard = ({ artist, isFavorite = false, onToggleFavorite }: ArtistCardProps) => {
   const [accentColor] = getColorForGenre(artist.genero_musical);
+  const { isAuthenticated } = useUserAuth();
+
+  const handleFavoriteClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onToggleFavorite?.(artist.id);
+  };
 
   return (
     <Link
@@ -30,6 +45,19 @@ const ArtistCard = ({ artist }: { artist: Artist }) => {
           >
             <Music className="text-white" size={16} />
           </div>
+
+          {isAuthenticated && onToggleFavorite && (
+            <button
+              onClick={handleFavoriteClick}
+              aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+              className="absolute top-2 left-2 z-10 bg-slate-950/70 hover:bg-slate-950 rounded-full p-1.5 transition-colors"
+            >
+              <Heart
+                size={16}
+                className={isFavorite ? "fill-pink-500 text-pink-500" : "text-white"}
+              />
+            </button>
+          )}
         </div>
 
         <div className="p-6 pt-4">
