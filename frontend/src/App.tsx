@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminMessages from "./pages/admin/AdminMessages";
+import AdminArtists from "./pages/admin/AdminArtists";
 import UserLogin from "./pages/user/UserLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -31,6 +32,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <AdminMessages />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/artists"
+                element={
+                  <ProtectedRoute>
+                    <AdminArtists />
                   </ProtectedRoute>
                 }
               />
