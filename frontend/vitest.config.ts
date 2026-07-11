@@ -7,5 +7,15 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.ts',
+    coverage: {
+      exclude: [
+        'src/App.tsx',
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+        '**/*.config.*',
+        'src/test/**',
+        'dist/**',
+      ],
+    },
   },
 })

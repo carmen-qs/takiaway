@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaYoutube, FaSpotify } from "react-icons/fa";
 import { Music, MousePointer2 } from "lucide-react";
 import Footer from "../images/Footer.png";
@@ -89,10 +90,13 @@ export default function Home() {
               modernidad.
             </p>
 
-            <button className="mt-8 md:mt-10 flex items-center gap-2 rounded-full bg-pink-600 px-6 md:px-10 py-3 md:py-4 text-base md:text-xl font-bold text-white transition hover:bg-pink-700">
+            <Link
+              to="/catalog"
+              className="mt-8 md:mt-10 flex items-center gap-2 rounded-full bg-pink-600 px-6 md:px-10 py-3 md:py-4 text-base md:text-xl font-bold text-white transition hover:bg-pink-700 w-fit"
+            >
               <Music size={20} />
               Explorar Artistas
-            </button>
+            </Link>
           </div>
         </div>
 

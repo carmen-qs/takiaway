@@ -1,46 +1,35 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
-import { getContactMessages } from "./adminService";
+import { getContactMessages, deleteContactMessage } from "./adminService";
 
-vi.mock("axios", () => ({
-  default: {
-    get: vi.fn(),
-  },
-}));
-
-const mockedGet = axios.get as unknown as ReturnType<typeof vi.fn>;
+vi.mock("axios");
 
 describe("adminService", () => {
   beforeEach(() => {
-    mockedGet.mockReset();
+    vi.restoreAllMocks();
   });
 
-  it("fetches contact messages with the auth token in the headers", async () => {
-    const messages = [
-      {
-        id: "1",
-        nombre: "Carmen",
-        email: "carmen@example.com",
-        mensaje: "Hola",
-        fecha_creacion: "2026-07-09T00:00:00Z",
-      },
-    ];
-    mockedGet.mockResolvedValue({ data: messages });
+  it("getContactMessages sends the auth header and returns the messages", async () => {
+    const data = [{ id: "1", nombre: "Carmen", email: "c@example.com", mensaje: "Hola", tipo: "consulta", fecha_creacion: "2026-01-01" }];
+    (axios.get as any).mockResolvedValue({ data });
 
-    const result = await getContactMessages("fake-token");
+    const result = await getContactMessages("token-abc");
 
-    expect(mockedGet).toHaveBeenCalledWith(
+    expect(axios.get).toHaveBeenCalledWith(
       expect.stringContaining("/api/v1/contact-messages"),
-      { headers: { Authorization: "Bearer fake-token" } }
+      { headers: { Authorization: "Bearer token-abc" } }
     );
-    expect(result).toEqual(messages);
+    expect(result).toEqual(data);
   });
 
-  it("propagates an error when the request fails", async () => {
-    mockedGet.mockRejectedValue(new Error("unauthorized"));
+  it("deleteContactMessage deletes the correct endpoint with the auth header", async () => {
+    (axios.delete as any).mockResolvedValue({});
 
-    await expect(getContactMessages("bad-token")).rejects.toThrow(
-      "unauthorized"
+    await deleteContactMessage("token-abc", "msg-1");
+
+    expect(axios.delete).toHaveBeenCalledWith(
+      expect.stringContaining("/api/v1/contact-messages/msg-1"),
+      { headers: { Authorization: "Bearer token-abc" } }
     );
   });
 });

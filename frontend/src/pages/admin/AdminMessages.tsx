@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getContactMessages, deleteContactMessage } from "../../services/adminService";
 import type { ContactMessageOut } from "../../services/adminService";
@@ -72,7 +72,7 @@ const AdminMessages: React.FC = () => {
   return (
     <div className="bg-slate-950 min-h-screen px-6 py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4">
           <h1
             className="text-3xl md:text-4xl uppercase text-white leading-tight"
             style={{ fontFamily: "'Permanent Marker', cursive" }}
@@ -85,6 +85,13 @@ const AdminMessages: React.FC = () => {
           >
             Cerrar sesión
           </button>
+        </div>
+
+        <div className="flex items-center gap-6 mb-8 text-sm">
+          <span className="text-pink-400 font-semibold">Mensajes</span>
+          <Link to="/admin/artists" className="text-slate-400 hover:text-pink-400">
+            Artistas
+          </Link>
         </div>
 
         {status === "loading" && (

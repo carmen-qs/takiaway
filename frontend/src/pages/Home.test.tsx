@@ -23,11 +23,11 @@ describe("Home page", () => {
     expect(screen.getByText("Ayacuchanos")).toBeInTheDocument();
   });
 
-  it("renders the call-to-action button", () => {
+  it("renders the call-to-action link to the catalog", () => {
     renderHome();
-    expect(
-      screen.getByRole("button", { name: /explorar artistas/i })
-    ).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: /explorar artistas/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/catalog");
   });
 
   it("renders the 'Conoce a los artistas' section", () => {

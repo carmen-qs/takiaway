@@ -65,8 +65,8 @@ Checkpoint: expired or invalid sessions are handled gracefully end to end.
 ## Phase N: Polish
 
 - [ ] T027 [P] Run quickstart.md validation scenarios end-to-end (local)
-- [ ] T028 [P] Add JWT_SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD to Render environment (production) and run seed_admin.py once via Render shell
-- [ ] T029 [P] Confirm no admin links appear in the public Header (FR-008)
+- [x] T028 [P] Add JWT_SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD to Render environment (production) and run seed_admin.py once via Render shell
+- [x] T029 [P] Confirm no admin links appear in the public Header (FR-008)
 - [ ] T030 [P] Code cleanup and documentation updates
 
 ## Dependencies & Execution Order
