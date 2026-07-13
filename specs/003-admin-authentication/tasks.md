@@ -56,18 +56,18 @@ Checkpoint: admin can log in and view all contact messages; route is protected.
 
 ## Phase 5: User Story 3 - Session Expiry (Priority: P2)
 
-- [ ] T024 [P] [US3] Contract test: expired JWT returns 401 in backend/tests/contract/test_auth_api.py (extend)
-- [ ] T025 [US3] Axios response interceptor in frontend/src/services (or a shared axios instance) that clears the stored token and redirects to /admin/login on any 401
-- [ ] T026 [P] [US3] Component/integration test verifying expired-token redirect behavior
+- [x] T024 [P] [US3] Contract test: expired JWT returns 401 in backend/tests/contract/test_auth_api.py (extend)
+- [x] T025 [US3] Axios response interceptor in frontend/src/services (or a shared axios instance) that clears the stored token and redirects to /admin/login on any 401
+- [x] T026 [P] [US3] Component/integration test verifying expired-token redirect behavior
 
 Checkpoint: expired or invalid sessions are handled gracefully end to end.
 
 ## Phase N: Polish
 
-- [ ] T027 [P] Run quickstart.md validation scenarios end-to-end (local)
+- [x] T027 [P] Run quickstart.md validation scenarios end-to-end (local)
 - [x] T028 [P] Add JWT_SECRET_KEY, ADMIN_EMAIL, ADMIN_PASSWORD to Render environment (production) and run seed_admin.py once via Render shell
 - [x] T029 [P] Confirm no admin links appear in the public Header (FR-008)
-- [ ] T030 [P] Code cleanup and documentation updates
+- [x] T030 [P] Code cleanup and documentation updates
 
 ## Dependencies & Execution Order
 
